@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Flurl.Http;
@@ -52,9 +51,8 @@ namespace gal_dl
 
                 case 2:
                     Console.WriteLine("[+] Multi Download Mode");
-                    Console.Write("Type in URL seperated by '+' => ");
+                    Console.Write("Type in URLs seperated by '+' => ");
                     string URLs = Console.ReadLine();
-                    List<string> url_list = new List<string>();
                     foreach (string item in URLs.Split("+"))
                     {
                         await DownloadAsync(item);
