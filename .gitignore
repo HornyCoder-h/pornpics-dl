@@ -404,4 +404,7 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+# Text files
+*.txt
+
 # End of https://www.toptal.com/developers/gitignore/api/windows,csharp,visualstudiocode,dotnetcore
