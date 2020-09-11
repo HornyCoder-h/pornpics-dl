@@ -9,7 +9,7 @@ namespace gal_dl
     {
         static async Task Main(string[] args)
         {
-
+            start:
             Console.Title = "Gallery Downloader";
             Console.BackgroundColor = ConsoleColor.Black;
             // Console.ForegroundColor = ConsoleColor.DarkCyan;
@@ -47,6 +47,15 @@ namespace gal_dl
                     Console.Write("Type in a URL => ");
                     string url = Console.ReadLine();
                     await DownloadAsync(url);
+                    Console.WriteLine($"Again?(y/n)");
+                    if(Console.ReadLine() == "y")
+                    {
+                        goto start;
+                    }
+                    else
+                    {
+
+                    }
                 break;
 
                 case 2:
@@ -56,6 +65,15 @@ namespace gal_dl
                     foreach (string item in URLs.Split("+"))
                     {
                         await DownloadAsync(item);
+                    }
+                    Console.WriteLine($"Again?(y/n)");
+                    if(Console.ReadLine() == "y")
+                    {
+                        goto start;
+                    }
+                    else
+                    {
+                        
                     }
                 break;
 
