@@ -12,7 +12,6 @@ namespace gal_dl
             start:
             Console.Title = "Gallery Downloader";
             Console.BackgroundColor = ConsoleColor.Black;
-            // Console.ForegroundColor = ConsoleColor.DarkCyan;
             Console.Clear();
             
             bool ValidInput = false;
