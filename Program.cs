@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using Flurl.Http;
 using HtmlAgilityPack;
@@ -7,7 +8,7 @@ namespace gal_dl
 {
     class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
 
             Console.Title = "Gallery Downloader";
@@ -38,14 +39,26 @@ namespace gal_dl
 
             GC.Collect();
 
+
+
             switch (input)
             {
                 case 1:
-                    SingleDownloadAsync();
+                    Console.WriteLine("[+] Single Download Mode");
+                    Console.Write("Type in a URL => ");
+                    string url = Console.ReadLine();
+                    await DownloadAsync(url);
                 break;
 
                 case 2:
-                    MultiDownloadAsync();
+                    Console.WriteLine("[+] Multi Download Mode");
+                    Console.Write("Type in URL seperated by '+' => ");
+                    string URLs = Console.ReadLine();
+                    List<string> url_list = new List<string>();
+                    foreach (string item in URLs.Split("+"))
+                    {
+                        await DownloadAsync(item);
+                    }
                 break;
 
                 case 3:
@@ -58,17 +71,21 @@ namespace gal_dl
 
         }
 
-        public static async void SingleDownloadAsync()
+        public static async Task DownloadAsync(string URL)
         {
+            // https://www.pornpics.com/galleries/puba-network-anna-bell-peaks-jenevieve-hexxx-74787898/
             Console.Clear();
-            Console.WriteLine("[+] Single Download Mode");
-            Console.Write("Type in a URL to get started => ");
-            string URL = Console.ReadLine();
             string folderName = URL.Remove(0, 35).Replace("/", "");
             HtmlWeb web = new HtmlWeb();
             var htmlDoc = web.Load(URL);
-            string path = $@"C:\\Users\\{Environment.UserName}\\gal-dl\\{folderName}";
-            Console.WriteLine(path);
+
+            string path = $"C:\\Users\\{Environment.UserName}\\gal-dl\\{folderName}";
+            if(!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+
+            Console.WriteLine($">>>>>Downloading {folderName}<<<<<");
             foreach (HtmlNode node in htmlDoc.DocumentNode.SelectNodes("//a[@class='rel-link']"))
             {
                 string img = node.GetAttributeValue("href", null).ToString();
@@ -76,30 +93,7 @@ namespace gal_dl
                 await img.DownloadFileAsync(path);
             }
             Console.WriteLine("Finished Downlaoding!");
+            GC.Collect();
         }
-
-        public static async void MultiDownloadAsync()
-        {
-            Console.Clear();
-            Console.WriteLine("[+] Multi Download Mode");
-            Console.Write("Type in URL seperated by '+' => ");
-            string URLs = Console.ReadLine();
-            List<string> url_list = new List<string>();
-            foreach (string url in URLs.Split("+"))
-            {
-                url_list.Add(url.Remove(0, 35).Replace("/", ""));
-            }
-            
-            // HtmlWeb web = new HtmlWeb();
-            // var htmlDoc = web.Load(URL);
-
-            // foreach (HtmlNode node in htmlDoc.DocumentNode.SelectNodes("//a[@class='rel-link']"))
-            // {
-            //     string img = node.GetAttributeValue("href", null).ToString();
-            //     Console.WriteLine($"Downloading => {img}");
-            //     await img.DownloadFileAsync(@"C:\\Users\\Amir\\gal-dl");
-            // }
-            // Console.WriteLine("Finished Downlaoding!");
-        } 
     }
 }
