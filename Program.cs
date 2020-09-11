@@ -67,13 +67,10 @@ namespace gal_dl
                 default:
                 break;
             }
-
-
         }
 
         public static async Task DownloadAsync(string URL)
         {
-            // https://www.pornpics.com/galleries/puba-network-anna-bell-peaks-jenevieve-hexxx-74787898/
             Console.Clear();
             string folderName = URL.Remove(0, 35).Replace("/", "");
             HtmlWeb web = new HtmlWeb();
