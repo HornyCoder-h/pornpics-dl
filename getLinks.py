@@ -26,7 +26,7 @@ driver.close()
 soup = bs(source, 'html5lib')
 a_links = []
 
-with open("links.txt", "w", encoding="utf-8") as f:
+with open(f'links - {search}.txt', "w", encoding="utf-8") as f:
     for link in soup.findAll('a', attrs={'class': 'rel-link'}):
         if 'pornpics' in link['href']:
             # a_links.append(link['href'])
