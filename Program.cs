@@ -12,7 +12,9 @@ namespace gal_dl
             start:
             Console.Title = "Gallery Downloader";
             Console.BackgroundColor = ConsoleColor.Black;
-            Console.Clear();
+            
+            Logo();
+
             
             bool ValidInput = false;
             int input = 0;
@@ -77,16 +79,19 @@ namespace gal_dl
                 break;
 
                 case 3:
+                Logo();
                 break;
 
                 default:
+                Logo();
                 break;
             }
+            Logo();
         }
 
         public static async Task DownloadAsync(string URL)
         {
-            Console.Clear();
+            Logo();
             string folderName = URL.Remove(0, 35).Replace("/", "");
             HtmlWeb web = new HtmlWeb();
             var htmlDoc = web.Load(URL);
@@ -106,6 +111,23 @@ namespace gal_dl
             }
             Console.WriteLine("Finished Downlaoding!");
             GC.Collect();
+        }
+
+        public static void Logo()
+        {
+            Console.Clear();
+            Console.WriteLine(@"
+
+        ___   ___  _                   ______ __  ___  
+       / _ \ / _ \| |            /\   |  ____/_ |/ _ \ 
+  _ __| | | | | | | |_ ___ _ __ /  \  | |__   | | (_) |
+ | '__| | | | | | | __/ _ \ '__/ /\ \ |  __|  | |\__, |
+ | |  | |_| | |_| | ||  __/ | / ____ \| |     | |  / / 
+ |_|   \___/ \___/ \__\___|_|/_/    \_\_|     |_| /_/  
+                                                       
+                                                       
+
+                        ");
         }
     }
 }
