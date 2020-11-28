@@ -23,7 +23,7 @@ namespace gal_dl
             {
                 Console.WriteLine("[1] Single Download");
                 Console.WriteLine("[2] Multi Download");
-                Console.WriteLine("[3] Exit!");
+                Console.WriteLine("[3] Exit");
                 Console.Write("==> ");
                 int temp = int.Parse(Console.ReadLine());
                 if(temp > 3)
