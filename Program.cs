@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Flurl.Http;
 using HtmlAgilityPack;
@@ -7,26 +8,28 @@ namespace gal_dl
 {
     class Program
     {
+        static bool OSisWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
         static async Task Main(string[] args)
         {
-            start:
+        start:
             Console.Title = "Gallery Downloader";
             Console.BackgroundColor = ConsoleColor.Black;
-            
+
             Logo();
 
-            
+            System.Console.WriteLine(OSisWindows);
+
             bool ValidInput = false;
             int input = 0;
 
-            while(!ValidInput)
+            while (!ValidInput)
             {
                 Console.WriteLine("[1] Single Download");
                 Console.WriteLine("[2] Multi Download");
                 Console.WriteLine("[3] Exit");
                 Console.Write("==> ");
                 int temp = int.Parse(Console.ReadLine());
-                if(temp > 3)
+                if (temp > 3)
                 {
                     Console.WriteLine("[-] Invalid Input!");
                 }
@@ -49,7 +52,7 @@ namespace gal_dl
                     string url = Console.ReadLine();
                     await DownloadAsync(url);
                     Console.WriteLine($"Again?(y/n)");
-                    if(Console.ReadLine() == "y")
+                    if (Console.ReadLine() == "y")
                     {
                         goto start;
                     }
@@ -57,7 +60,7 @@ namespace gal_dl
                     {
 
                     }
-                break;
+                    break;
 
                 case 2:
                     Console.WriteLine("[+] Multi Download Mode");
@@ -68,25 +71,27 @@ namespace gal_dl
                         await DownloadAsync(item);
                     }
                     Console.WriteLine($"Again?(y/n)");
-                    if(Console.ReadLine() == "y")
+                    if (Console.ReadLine() == "y")
                     {
                         goto start;
                     }
                     else
                     {
-                        
+
                     }
-                break;
+                    break;
 
                 case 3:
-                Logo();
-                break;
+                    Logo();
+
+                    break;
 
                 default:
-                Logo();
-                break;
+                    Logo();
+                    break;
             }
             Logo();
+
         }
 
         public static async Task DownloadAsync(string URL)
@@ -96,8 +101,18 @@ namespace gal_dl
             HtmlWeb web = new HtmlWeb();
             var htmlDoc = web.Load(URL);
 
-            string path = $"C:\\Users\\{Environment.UserName}\\gal-dl\\{folderName}";
-            if(!Directory.Exists(path))
+            string path;
+
+            if (OSisWindows)
+            {
+                path = $"C:\\Users\\{Environment.UserName}\\gal-dl\\{folderName}";
+            }
+            else
+            {
+                path = "/home/gal-dl";
+            }
+
+            if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);
             }
