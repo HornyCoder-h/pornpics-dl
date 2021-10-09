@@ -17,8 +17,6 @@ namespace gal_dl
 
             Logo();
 
-            System.Console.WriteLine(OSisWindows);
-
             bool ValidInput = false;
             int input = 0;
 
@@ -109,7 +107,7 @@ namespace gal_dl
             }
             else
             {
-                path = "/home/gal-dl";
+                path = $"/home/{Environment.UserName}/Pictures/gal-dl/";
             }
 
             if (!Directory.Exists(path))
